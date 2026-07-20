@@ -8,6 +8,9 @@ build/
 .eggs/
 
 docs/
+!docs/
+docs/*
+!docs/full_stack_audit.md
 
 
 
@@ -15,7 +18,14 @@ docs/
 .venv/
 venv/
 .env
+.env.local
 .venv311/
+
+# JavaScript / Hardhat build outputs
+node_modules/
+frontend/dist/
+blockchain/cache/
+blockchain/artifacts/
 
 # IDE
 .vscode/

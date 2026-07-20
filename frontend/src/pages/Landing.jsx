@@ -1,0 +1,4 @@
+import { motion } from "framer-motion";
+import { ArrowUpRight, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
+export default function Landing() { return <motion.div initial={{opacity:0}} animate={{opacity:1}} className="landing"><div className="landing-nav"><span className="brand">SOLAR<span>X</span></span><span>21 AGENT MICROGRID</span></div><div className="hero"><p><Zap/> P2P ENERGY EXCHANGE</p><h1>Trade local power.<br/><i>Reward smarter grids.</i></h1><p className="lede">SolarXChange coordinates a 21-agent campus market with MAPPO intelligence, physical-grid safety, and an optional on-chain settlement ledger.</p><Link to="/dashboard">Enter terminal <ArrowUpRight size={19}/></Link></div><footer><span>IEEE 33-BUS NETWORK</span><span>RAY RLLIB / MAPPO</span><span>HESCOM TARIFFS</span></footer></motion.div>; }

@@ -1,0 +1,2 @@
+import { motion } from "framer-motion"; import TradeForm from "../components/Marketplace/TradeForm"; import TradeHistory from "../components/Marketplace/TradeHistory";
+export default function Marketplace(){return <motion.div initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} className="page"><div className="page-title"><div><p>LOCAL MARKET</p><h1>Energy marketplace</h1></div></div><div className="market-grid"><TradeForm/><TradeHistory/></div></motion.div>}

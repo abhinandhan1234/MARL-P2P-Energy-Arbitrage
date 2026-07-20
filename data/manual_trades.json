@@ -1,0 +1,52 @@
+[
+  {
+    "trade_id": "trade_556666059801",
+    "seller": "solar_01",
+    "buyer": "college",
+    "volume_kwh": 10.0,
+    "price_rs_per_kwh": 5.8,
+    "amount_rs": 58.0,
+    "status": "COMPLETED",
+    "created_at": "2026-07-20T16:46:42.209513+00:00"
+  },
+  {
+    "trade_id": "trade_05e28fb39a0f",
+    "seller": "solar_14",
+    "buyer": "consumer_01",
+    "volume_kwh": 10.0,
+    "price_rs_per_kwh": 5.8,
+    "amount_rs": 58.0,
+    "status": "COMPLETED",
+    "created_at": "2026-07-20T16:46:53.870438+00:00"
+  },
+  {
+    "trade_id": "trade_9aa81ee94169",
+    "seller": "college",
+    "buyer": "solar_08",
+    "volume_kwh": 20.0,
+    "price_rs_per_kwh": 5.8,
+    "amount_rs": 116.0,
+    "status": "COMPLETED",
+    "created_at": "2026-07-20T16:56:21.995895+00:00"
+  },
+  {
+    "trade_id": "trade_ac68229a83c7",
+    "seller": "college",
+    "buyer": "consumer_02",
+    "volume_kwh": 25.0,
+    "price_rs_per_kwh": 5.8,
+    "amount_rs": 145.0,
+    "status": "COMPLETED",
+    "created_at": "2026-07-20T17:13:59.277168+00:00"
+  },
+  {
+    "trade_id": "trade_6a15d98b46d4",
+    "seller": "college",
+    "buyer": "consumer_03",
+    "volume_kwh": 20.0,
+    "price_rs_per_kwh": 10.0,
+    "amount_rs": 200.0,
+    "status": "COMPLETED",
+    "created_at": "2026-07-20T17:16:32.257272+00:00"
+  }
+]

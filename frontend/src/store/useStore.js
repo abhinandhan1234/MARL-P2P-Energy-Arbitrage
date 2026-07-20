@@ -1,0 +1,2 @@
+import { create } from "zustand";
+export const useStore = create((set) => ({ walletAddress: "", connectionStatus: "connecting", liveAgentData: null, priceHistory: [], setWalletAddress: (walletAddress) => set({ walletAddress }), setConnectionStatus: (connectionStatus) => set({ connectionStatus }), ingestLiveData: (payload) => set((state) => ({ liveAgentData: payload, priceHistory: [...state.priceHistory, { time: new Date(payload.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" }), price: payload.clearing_price }].slice(-60) })) }));

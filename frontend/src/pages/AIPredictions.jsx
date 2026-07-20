@@ -1,0 +1,2 @@
+import { motion } from "framer-motion"; import ForecastChart from "../components/AIPredictions/ForecastChart"; import PolicyInsights from "../components/AIPredictions/PolicyInsights";
+export default function AIPredictions(){return <motion.div initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} className="page"><div className="page-title"><div><p>RL INTELLIGENCE</p><h1>AI predictions</h1></div></div><div className="dashboard-grid"><ForecastChart/><PolicyInsights/></div></motion.div>}

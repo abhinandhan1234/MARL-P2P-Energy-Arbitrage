@@ -1,0 +1,3 @@
+import { motion } from "framer-motion";
+import AgentGrid from "../components/Dashboard/AgentGrid"; import MetricsSummary from "../components/Dashboard/MetricsSummary"; import OrderBook from "../components/Dashboard/OrderBook"; import PriceChart from "../components/Dashboard/PriceChart";
+export default function Dashboard(){return <motion.div initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} className="page"><div className="page-title"><div><p>COMMAND CENTER</p><h1>Market pulse</h1></div><span>Live stream • 2 sec</span></div><MetricsSummary/><div className="dashboard-grid"><PriceChart/><OrderBook/></div><AgentGrid/></motion.div>}

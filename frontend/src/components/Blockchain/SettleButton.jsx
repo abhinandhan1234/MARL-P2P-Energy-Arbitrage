@@ -1,0 +1,3 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { api, readError } from "../../api/client";
+export default function SettleButton() { const client=useQueryClient(); const mutation=useMutation({mutationFn:()=>api.post("/api/blockchain/settle"),onSuccess:({data})=>{alert(data.settled?`Submitted ${data.settled} settlement transaction(s).`:"No unsettled trades found.");client.invalidateQueries({queryKey:["transactions"]});},onError:e=>alert(readError(e))}); return <button disabled={mutation.isPending} onClick={()=>mutation.mutate()}>{mutation.isPending?"Settling…":"Settle completed trades"}</button>; }

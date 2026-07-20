@@ -1,0 +1,4 @@
+import { BrowserProvider } from "ethers";
+import { useState } from "react";
+import { useStore } from "../../store/useStore";
+export default function WalletConnect() { const address=useStore(s=>s.walletAddress); const setAddress=useStore(s=>s.setWalletAddress); const [busy,setBusy]=useState(false); const connect=async()=>{if(!window.ethereum)return alert("MetaMask was not found. Install it to connect a wallet.");try{setBusy(true);const provider=new BrowserProvider(window.ethereum);const signer=await provider.getSigner();setAddress(await signer.getAddress());}catch(e){alert(e.message||"Wallet connection was cancelled.");}finally{setBusy(false);}}; return <button className="wallet" onClick={connect} disabled={busy}>{busy?"Connecting…":address?`${address.slice(0,6)}…${address.slice(-4)}`:"Connect Wallet"}</button>; }

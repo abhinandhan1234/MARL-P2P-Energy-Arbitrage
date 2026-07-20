@@ -1,0 +1,3 @@
+import { ResponsiveContainer, LineChart, Line, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
+import { useStore } from "../../store/useStore";
+export default function PriceChart() { const history = useStore((s) => s.priceHistory); return <section className="card chart-card"><h3>Clearing price <span>Rs / kWh</span></h3><ResponsiveContainer width="100%" height={230}><LineChart data={history}><CartesianGrid stroke="rgba(255,255,255,.06)" vertical={false}/><XAxis dataKey="time" hide/><YAxis domain={[3, 9]} tick={{fill:"#6b6b65", fontSize:11}}/><Tooltip contentStyle={{background:"#1a1a18",border:"1px solid #30302c"}}/><Line type="monotone" dataKey="price" stroke="#c8f73a" strokeWidth={2.5} dot={false}/></LineChart></ResponsiveContainer></section>; }
