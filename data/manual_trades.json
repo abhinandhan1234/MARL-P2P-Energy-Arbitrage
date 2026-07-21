@@ -48,5 +48,25 @@
     "amount_rs": 200.0,
     "status": "COMPLETED",
     "created_at": "2026-07-20T17:16:32.257272+00:00"
+  },
+  {
+    "trade_id": "trade_b91e44a5d364",
+    "seller": "college",
+    "buyer": "consumer_01",
+    "volume_kwh": 10.0,
+    "price_rs_per_kwh": 5.8,
+    "amount_rs": 58.0,
+    "status": "COMPLETED",
+    "created_at": "2026-07-21T04:10:38.863486+00:00"
+  },
+  {
+    "trade_id": "trade_e78d9848dce5",
+    "seller": "college",
+    "buyer": "consumer_01",
+    "volume_kwh": 10.0,
+    "price_rs_per_kwh": 5.8,
+    "amount_rs": 58.0,
+    "status": "COMPLETED",
+    "created_at": "2026-07-21T04:55:40.537803+00:00"
   }
 ]
