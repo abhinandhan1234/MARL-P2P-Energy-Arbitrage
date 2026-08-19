@@ -120,6 +120,16 @@ class P2PEnergyTradingEnv(MultiAgentEnv):
         )
         self.data_dir = self.config.get("data_dir", "data/processed")
 
+        self.blockchain_settlement = bool(self.config.get("blockchain_settlement", False))
+        self.blockchain = None
+        if self.blockchain_settlement:
+            try:
+                from p2p_energy_trading.blockchain_service import BlockchainService
+                self.blockchain = BlockchainService()
+            except Exception as e:
+                logger.error("Failed to load BlockchainService in environment: %s", e)
+
+
         self.curriculum_transition_step = int(
             self.config.get("curriculum_transition_step", 100000)
         )
@@ -743,7 +753,62 @@ class P2PEnergyTradingEnv(MultiAgentEnv):
         self.last_actions = cleaned_actions
         self.prev_battery_dispatch_kw = battery_dispatch_kw
 
+        if self.blockchain_settlement and self.eval_mode and self.blockchain and self.blockchain.configured:
+            self._settle_trades_on_chain(settlements)
+
         return obs_dict, reward_dict, terminated_dict, truncated_dict, info_dict
+
+    def _settle_trades_on_chain(self, settlements: dict[str, SettlementRecord]) -> None:
+        """Greedily match P2P buyers and sellers and submit trades to the smart contract."""
+        buyers = []
+        sellers = []
+        for aid, record in settlements.items():
+            if record.p2p_bought_kw > 1e-5:
+                buyers.append({"id": aid, "amount": float(record.p2p_bought_kw)})
+            if record.p2p_sold_kw > 1e-5:
+                sellers.append({"id": aid, "amount": float(record.p2p_sold_kw)})
+
+        buyer_idx = 0
+        seller_idx = 0
+        while buyer_idx < len(buyers) and seller_idx < len(sellers):
+            buyer = buyers[buyer_idx]
+            seller = sellers[seller_idx]
+
+            trade_vol = min(buyer["amount"], seller["amount"])
+            if trade_vol > 1e-5:
+                try:
+                    seller_wallet = self.blockchain.resolve_party(seller["id"])
+                    buyer_wallet = self.blockchain.resolve_party(buyer["id"])
+
+                    # Volume in Wh (kW * 1000 * 1 hour)
+                    energy_wh = round(trade_vol * 1000)
+                    # Price in paisa (Rs * 100)
+                    price_paisa = round(settlements[seller["id"]].p2p_price * 100)
+
+                    tx_hash = self.blockchain.settle_trade(
+                        seller_wallet,
+                        buyer_wallet,
+                        energy_wh,
+                        price_paisa
+                    )
+                    logger.info(
+                        "On-chain trade settled: %s -> %s, %s Wh @ %s paisa. Hash: %s",
+                        seller["id"], buyer["id"], energy_wh, price_paisa, tx_hash
+                    )
+                except Exception as e:
+                    logger.error(
+                        "Failed to settle trade %s -> %s on chain: %s",
+                        seller["id"], buyer["id"], e
+                    )
+
+            buyer["amount"] -= trade_vol
+            seller["amount"] -= trade_vol
+
+            if buyer["amount"] <= 1e-5:
+                buyer_idx += 1
+            if seller["amount"] <= 1e-5:
+                seller_idx += 1
+
 
     def close(self) -> None:
         """Clean up environment resources."""

@@ -391,6 +391,11 @@ def settle_trades() -> dict[str, Any]:
     return {"settled": len(transactions), "transactions": transactions}
 
 
+@app.get("/api/blockchain/status")
+def blockchain_status() -> dict[str, Any]:
+    return blockchain.get_status()
+
+
 @app.get("/api/blockchain/transactions")
 def blockchain_transactions() -> list[dict[str, Any]]:
     if blockchain.configured:

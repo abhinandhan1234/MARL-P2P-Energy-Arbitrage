@@ -28,6 +28,13 @@ contract EnergyTrading {
         emit FundsDeposited(msg.sender, msg.value);
     }
 
+    function depositFor(address user) external payable {
+        require(msg.value > 0, "Deposit must be positive");
+        require(user != address(0), "Invalid address");
+        balances[user] += msg.value;
+        emit FundsDeposited(user, msg.value);
+    }
+
     function settleTrade(address seller, address buyer, uint256 energyWh, uint256 priceRsPaisa) external {
         require(msg.sender == settlementOperator, "Only settlement operator");
         require(seller != address(0) && buyer != address(0), "Invalid participant");
