@@ -38,7 +38,7 @@ def get_version_info() -> dict[str, str]:
         import ray
 
         versions["ray"] = ray.__version__
-    except ImportError:
+    except (ImportError, OSError):
         versions["ray"] = "not installed"
 
     try:

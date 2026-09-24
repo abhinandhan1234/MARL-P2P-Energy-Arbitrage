@@ -17,6 +17,7 @@ from typing import Any
 # third party
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, field_validator
 
@@ -400,10 +401,25 @@ def blockchain_status() -> dict[str, Any]:
 def blockchain_transactions() -> list[dict[str, Any]]:
     if blockchain.configured:
         try:
-            return blockchain.get_trades()[-50:][::-1]
+            trades = blockchain.get_trades()
+            if trades:
+                return trades[-50:][::-1]
         except BlockchainUnavailable:
             pass
-    return [trade for trade in live_state.trades if trade.get("tx_hash")][-50:][::-1]
+        except Exception:
+            pass
+
+    # Clearly label fallback records as HISTORICAL_MOCK / DEMO_DATA
+    fallback_trades: list[dict[str, Any]] = []
+    for trade in live_state.trades:
+        if trade.get("tx_hash"):
+            t = dict(trade)
+            t["is_mock"] = True
+            t["status"] = "HISTORICAL_MOCK"
+            t["seller_name"] = t.get("seller", "")
+            t["buyer_name"] = t.get("buyer", "")
+            fallback_trades.append(t)
+    return fallback_trades[-50:][::-1]
 
 
 @app.websocket("/ws/live")
@@ -421,4 +437,18 @@ async def live_websocket(websocket: WebSocket) -> None:
 
 FRONTEND_DIST = ROOT / "frontend" / "dist"
 if FRONTEND_DIST.exists():
-    app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
+    if (FRONTEND_DIST / "assets").exists():
+        app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        if full_path.startswith("api/") or full_path.startswith("ws/"):
+            raise HTTPException(status_code=404, detail="Not Found")
+        file_path = FRONTEND_DIST / full_path
+        if file_path.exists() and file_path.is_file():
+            return FileResponse(file_path)
+        index_file = FRONTEND_DIST / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        raise HTTPException(status_code=404, detail="Frontend build index.html not found.")
+

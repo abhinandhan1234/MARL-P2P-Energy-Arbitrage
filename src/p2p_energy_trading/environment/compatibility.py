@@ -17,9 +17,9 @@ logger = logging.getLogger(__name__)
 try:
     # third party
     from ray.rllib.env.multi_agent_env import MultiAgentEnv
-except ImportError:
+except (ImportError, OSError):
     logger.warning(
-        "Ray/RLlib is not installed in this Python environment. "
+        "Ray/RLlib is not installed or blocked in this Python environment. "
         "Falling back to a Gymnasium-based MultiAgentEnv stub"
         " for testing compatibility."
     )

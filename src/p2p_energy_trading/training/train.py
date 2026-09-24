@@ -42,7 +42,7 @@ try:
     from tensorboardX import SummaryWriter
 
     RAY_AVAILABLE = True
-except ImportError:
+except (ImportError, OSError):
     Algorithm = None  # type: ignore
     RAY_AVAILABLE = False
 

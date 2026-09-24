@@ -1,10 +1,29 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
 
 module.exports = {
-  solidity: "0.8.20",
+  solidity: {
+    version: "0.8.20",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
+  },
   networks: {
-    // Mumbai was retired by Polygon; Amoy is Polygon's supported replacement testnet.
-    amoy: { url: process.env.BLOCKCHAIN_RPC_URL || "", accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [] },
+    localhost: {
+      url: process.env.BLOCKCHAIN_RPC_URL || "http://127.0.0.1:8545",
+      chainId: 31337,
+      accounts: process.env.DEPLOYER_PRIVATE_KEY
+        ? [process.env.DEPLOYER_PRIVATE_KEY]
+        : ["0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"],
+    },
+    amoy: {
+      url: process.env.BLOCKCHAIN_RPC_URL || "https://rpc-amoy.polygon.technology",
+      chainId: 80002,
+      accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
+    },
   },
 };

@@ -1,6 +1,18 @@
 {
   "name": "solarxchange-blockchain",
   "private": true,
-  "scripts": { "compile": "hardhat compile", "deploy:amoy": "hardhat run scripts/deploy.js --network amoy" },
-  "devDependencies": { "@nomicfoundation/hardhat-toolbox": "^6.1.0", "dotenv": "^16.4.7", "hardhat": "^2.22.0" }
+  "scripts": {
+    "compile": "hardhat compile",
+    "blockchain:start": "node scripts/start-node.js",
+    "blockchain:init": "hardhat run scripts/deploy.js --network localhost",
+    "blockchain:status": "hardhat run scripts/status.js --network localhost",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:amoy": "hardhat run scripts/deploy.js --network amoy"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^6.1.0",
+    "dotenv": "^16.4.7",
+    "ganache": "^7.9.2",
+    "hardhat": "^2.22.0"
+  }
 }

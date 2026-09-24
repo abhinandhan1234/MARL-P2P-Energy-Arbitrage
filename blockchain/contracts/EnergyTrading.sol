@@ -16,7 +16,15 @@ contract EnergyTrading {
     Trade[] public trades;
     mapping(address => uint256) public balances;
 
-    event TradeSettled(uint256 indexed tradeId, address seller, address buyer, uint256 amount);
+    event TradeSettled(
+        uint256 indexed tradeId,
+        address indexed seller,
+        address indexed buyer,
+        uint256 energyWh,
+        uint256 priceRsPaisa,
+        uint256 amount,
+        uint256 timestamp
+    );
     event FundsDeposited(address indexed user, uint256 amount);
     event FundsWithdrawn(address indexed user, uint256 amount);
 
@@ -46,7 +54,7 @@ contract EnergyTrading {
         balances[buyer] -= amount;
         balances[seller] += amount;
         trades.push(Trade(seller, buyer, energyWh, priceRsPaisa, block.timestamp, true));
-        emit TradeSettled(trades.length - 1, seller, buyer, amount);
+        emit TradeSettled(trades.length - 1, seller, buyer, energyWh, priceRsPaisa, amount, block.timestamp);
     }
 
     function withdraw(uint256 amount) external {

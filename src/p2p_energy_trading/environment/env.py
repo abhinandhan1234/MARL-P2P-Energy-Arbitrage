@@ -122,6 +122,7 @@ class P2PEnergyTradingEnv(MultiAgentEnv):
 
         self.blockchain_settlement = bool(self.config.get("blockchain_settlement", False))
         self.blockchain = None
+        self.on_chain_settlements: list[dict[str, Any]] = []
         if self.blockchain_settlement:
             try:
                 from p2p_energy_trading.blockchain_service import BlockchainService
@@ -791,6 +792,14 @@ class P2PEnergyTradingEnv(MultiAgentEnv):
                         energy_wh,
                         price_paisa
                     )
+                    self.on_chain_settlements.append({
+                        "step": self.current_timestep,
+                        "seller": seller["id"],
+                        "buyer": buyer["id"],
+                        "energy_wh": energy_wh,
+                        "price_paisa": price_paisa,
+                        "tx_hash": tx_hash,
+                    })
                     logger.info(
                         "On-chain trade settled: %s -> %s, %s Wh @ %s paisa. Hash: %s",
                         seller["id"], buyer["id"], energy_wh, price_paisa, tx_hash

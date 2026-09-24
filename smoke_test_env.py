@@ -54,7 +54,7 @@ for step in range(1, 1001):
         print(f"Episode ended at step {step}. Resetting environment...")
         obs, info = env.reset()
 
-print("\n✓ Environment Smoke Test PASSED successfully with zero errors!")
+print("\n[PASS] Environment Smoke Test PASSED successfully with zero errors!")
 
 # 3. Close the environment
 env.close()

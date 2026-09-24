@@ -25,7 +25,10 @@ venv/
 node_modules/
 frontend/dist/
 blockchain/cache/
-blockchain/artifacts/
+blockchain/blockchain-data/
+blockchain-data/
+blockchain/artifacts/*
+!blockchain/artifacts/EnergyTrading.json
 
 # IDE
 .vscode/
