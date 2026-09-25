@@ -75,5 +75,38 @@
     "status": "SETTLEMENT_SUBMITTED",
     "created_at": "2026-07-21T04:55:40.537803+00:00",
     "tx_hash": "0xa62f6a64b8e2743db36f712fd6466c89b290d04d065993ffaa0a1c9984cb10ab"
+  },
+  {
+    "trade_id": "trade_05e36bb0ee67",
+    "seller": "solar_01",
+    "buyer": "college",
+    "volume_kwh": 10.0,
+    "price_rs_per_kwh": 5.8,
+    "amount_rs": 58.0,
+    "status": "SETTLEMENT_SUBMITTED",
+    "created_at": "2026-09-25T06:50:15.681330+00:00",
+    "tx_hash": "0xbb19ff6d47585767a502b2b114adef6ab9c76553de38cd4cc467da7af53abf25"
+  },
+  {
+    "trade_id": "trade_0f5485078486",
+    "seller": "solar_01",
+    "buyer": "college",
+    "volume_kwh": 10.0,
+    "price_rs_per_kwh": 5.8,
+    "amount_rs": 58.0,
+    "status": "SETTLEMENT_SUBMITTED",
+    "created_at": "2026-09-25T06:50:16.676196+00:00",
+    "tx_hash": "0x7eb5d2263ebebfe6634ea1eed63fc5bce0f66e9e4b38403ae6f2bf12e93fcaff"
+  },
+  {
+    "trade_id": "trade_4a65d1bc6098",
+    "seller": "solar_01",
+    "buyer": "college",
+    "volume_kwh": 10.0,
+    "price_rs_per_kwh": 5.4,
+    "amount_rs": 54.0,
+    "status": "SETTLEMENT_SUBMITTED",
+    "created_at": "2026-09-25T06:50:36.238736+00:00",
+    "tx_hash": "0x66275a48aa91993f4ef1c46b763bb096534bff06b22040f4e1e5a34a4de6e1b2"
   }
 ]
